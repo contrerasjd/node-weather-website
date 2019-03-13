@@ -1,5 +1,3 @@
-console.log('JavaScript loaded');
-
 const form      = document.querySelector('form'),
       formInput = document.querySelector('input'),
       message1  = document.querySelector('#message-1'),
