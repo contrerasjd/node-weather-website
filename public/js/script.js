@@ -15,7 +15,7 @@ form.addEventListener('submit', (e) => {
   } else {
     dispMsg('Loading...');
 
-    fetch('./weather?address=' + encodeURI(formInput.value))
+    fetch('/weather?address=' + encodeURI(formInput.value))
     .then(response => response.json())
     .then(data => {
       if (data.error)
