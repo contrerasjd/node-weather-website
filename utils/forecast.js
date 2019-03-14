@@ -1,18 +1,8 @@
+let   timeZone;
 const request       = require('request'),
+      geoTz         = require('geo-tz'),
       timeFormater  = (tstamp) => {
-        let date    = new Date(tstamp*1000),
-            hours   = date.getHours(),
-            minutes = '0' + date.getMinutes(),
-            ampm    = 'am';
-
-        if (hours >= 12) {
-          ampm  = 'pm';
-
-          if (hours > 12)
-            hours %= 12;
-        }
-
-        return hours + ':' + minutes.substr(-2) + ampm;
+        return new Date(tstamp*1000).toLocaleString([], { timeZone, hour12: true, hour: '2-digit', minute:'2-digit'});
       },
       forecast      = (lat, long, callback) => {
         const uri     = `https://api.darksky.net/forecast/6289164fd9efb239314ee4e534a487f3/${lat},${long}`,
@@ -39,11 +29,13 @@ const request       = require('request'),
               temperatureHighTime
             } = daily.data[0];
 
-            console.log(daily.data[0]);
+            timeZone = geoTz(lat,long)[0];
 
             callback(undefined, summary + ' It is currently ' + currently.temperature + ' degrees out. There is ' + currently.precipProbability + '% chance of rain. Today\'s temperatures will range from ' + Math.round(temperatureLow) + '&deg;F @ ' + timeFormater(temperatureLowTime) + ' to ' + Math.round(temperatureHigh) + '&deg;F @ ' + timeFormater(temperatureHighTime));
           }
         })
       };
+
+geoTz.preCache();
 
 module.exports = forecast;
