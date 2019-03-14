@@ -36,6 +36,4 @@ const request       = require('request'),
         })
       };
 
-geoTz.preCache();
-
 module.exports = forecast;
