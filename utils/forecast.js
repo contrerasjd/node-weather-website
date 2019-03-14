@@ -5,9 +5,11 @@ const request       = require('request'),
             minutes = '0' + date.getMinutes(),
             ampm    = 'am';
 
-        if (hours > 12) {
-          hours %= 12;
+        if (hours >= 12) {
           ampm  = 'pm';
+
+          if (hours > 12)
+            hours %= 12;
         }
 
         return hours + ':' + minutes.substr(-2) + ampm;
@@ -36,6 +38,8 @@ const request       = require('request'),
               temperatureHigh,
               temperatureHighTime
             } = daily.data[0];
+
+            console.log(daily.data[0]);
 
             callback(undefined, summary + ' It is currently ' + currently.temperature + ' degrees out. There is ' + currently.precipProbability + '% chance of rain. Today\'s temperatures will range from ' + Math.round(temperatureLow) + '&deg;F @ ' + timeFormater(temperatureLowTime) + ' to ' + Math.round(temperatureHigh) + '&deg;F @ ' + timeFormater(temperatureHighTime));
           }
