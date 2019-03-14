@@ -3,8 +3,8 @@ const form      = document.querySelector('form'),
       message1  = document.querySelector('#message-1'),
       message2  = document.querySelector('#message-2'),
       dispMsg   = (msg1, msg2 = '') => {
-        message1.textContent = msg1;
-        message2.textContent = msg2;
+        message1.innerHTML = msg1;
+        message2.innerHTML = msg2;
       };
 
 form.addEventListener('submit', (e) => {
