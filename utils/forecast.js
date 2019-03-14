@@ -29,9 +29,15 @@ const request       = require('request'),
           } else if (errorTxt) {
             callback('Error: ' + errorTxt);
           } else {
-            const {summary, temperatureMin, temperatureMinTime, temperatureMax, temperatureMaxTime} = daily.data[0];
+            const {
+              summary,
+              temperatureLow,
+              temperatureLowTime,
+              temperatureHigh,
+              temperatureHighTime
+            } = daily.data[0];
 
-            callback(undefined, summary + ' It is currently ' + currently.temperature + ' degrees out. There is ' + currently.precipProbability + '% chance of rain. Today\'s temperatures will range from ' + temperatureMin + '&deg;F @ ' + timeFormater(temperatureMinTime) + ' to ' + temperatureMax + '&deg;F @ ' + timeFormater(temperatureMaxTime));
+            callback(undefined, summary + ' It is currently ' + currently.temperature + ' degrees out. There is ' + currently.precipProbability + '% chance of rain. Today\'s temperatures will range from ' + Math.round(temperatureLow) + '&deg;F @ ' + timeFormater(temperatureLowTime) + ' to ' + Math.round(temperatureHigh) + '&deg;F @ ' + timeFormater(temperatureHighTime));
           }
         })
       };
